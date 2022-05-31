@@ -1,0 +1,51 @@
+package rules
+
+import com.ikong.demo.drools.entity.Order
+
+rule "zero"
+    no-loop true
+    lock-on-active true
+    salience 1
+    when
+        $s : Order(amout <= 100)
+    then
+        $s.setScore(0);
+        $s.setRule("add0");
+        update($s);
+end
+
+rule "add100"
+    no-loop true
+    lock-on-active true
+    salience 1
+    when
+        $s : Order(amout > 100 && amout <= 500)
+    then
+        $s.setScore(100);
+        $s.setRule("add100");
+        update($s);
+end
+
+rule "add500"
+    no-loop true
+    lock-on-active true
+    salience 1
+    when
+        $s : Order(amout > 500 && amout <= 1000)
+    then
+        $s.setScore(500);
+        $s.setRule("add500");
+        update($s);
+end
+
+rule "add1000"
+    no-loop true
+    lock-on-active true
+    salience 1
+    when
+        $s : Order(amout > 1000)
+    then
+        $s.setScore(1000);
+        $s.setRule("add1000");
+        update($s);
+end
